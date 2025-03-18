@@ -9,6 +9,12 @@
     v-model="taskDescription"
     placeholder="Add your task description..."
   />
+  <input
+    v-model="date"
+    type="text"
+    placeholder="Add the date..."
+    required
+  />
   <button
     type="button"
     @click="emit(
@@ -28,6 +34,7 @@ const emit = defineEmits<{
 
 const taskSubject = defineModel<string>('subject', { default: '' });
 const taskDescription = defineModel<string>('description', { default: '' });
+const date = defineModel<string>('date', { default: '' });
 </script>
 
 <style lang="scss" scoped>
@@ -62,7 +69,7 @@ button {
   padding: 0.5rem 1rem;
 
   &:hover {
-    background-color: darken(#1fb464, 10%);
+    background-color: darkgreen;
   }
 }
 </style>

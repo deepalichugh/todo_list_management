@@ -1,6 +1,7 @@
 <template>
   <span class="item">
     <p v-if="!updateVal">
+      {{ subject }}
     </p>
     <input
       v-else
@@ -10,24 +11,35 @@
       <button
         v-if="!updateVal"
         type="button"
-        class="btn"
-        @click="
-          updateVal = true;
-        "
+        class="btn btn-edit"
+        @click="updateVal = true"
       >
-        Edit
+      <i class="material-icons">edit</i>
       </button>
-      <button
-        v-else
-        type="button"
-        class="btn"
-        @click="
-          updateVal = false;
-          emit('edit', { old: subject, new: taskSubject! });
-        "
-      >
-        Submit
-      </button>
+      <span v-else>
+        <button
+          type="button"
+          class="btn btn-update"
+          :disabled="!taskSubject"
+          @click="
+            emit('edit', { old: subject, new: taskSubject! });
+            updateVal = false;
+            taskSubject = '';
+          "
+        >
+        <i class="material-icons">check</i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-close"
+          @click="
+            updateVal = false;
+            taskSubject = ''
+          "
+        >
+          <i class="material-icons">close</i>
+        </button>
+      </span>
     </div>
   </span>
 </template>
@@ -43,7 +55,6 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'edit', value: { old: string, new: string }): void,
 }>();
-const subject = ref('');
 
 // const isSubmitted = ref(false);
 const updateVal = ref(false);
@@ -74,12 +85,60 @@ input {
   }
 }
 
+span {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .btn {
-  padding: 0.25rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 50%;
   border: none;
-  background-color: rgb(243, 136, 64);
+  height: 24px;
+  width: 24px;
+  font-weight: 600;
+
+  i {
+    font-size: 14px;
+  }
+
+  &:disabled {
+    background-color: rgb(231, 230, 230);
+    color: darkgray;
+    pointer-events: none;
+  }
+
+  &-update {
+    background-color: rgb(71, 226, 44);
+
+    &:hover {
+      background-color: rgb(55, 186, 31);
+    }
+  }
+
+  &-edit {
+    background-color: rgb(60, 141, 246);
+
+    &:hover {
+      background-color: rgb(19, 114, 181);
+    }
+  }
+
+  &-close {
+    border: none;
+    background-color: #fff;
+
+    &:hover {
+      background-color: lightgray;
+    }
+
+    i {
+      color: darkgray;
+    }
+  }
 }
 
 p {

@@ -1,17 +1,11 @@
 <template>
-  <h1 class="header">
-    Your Daily To Do List
-  </h1>
-  <todo-list />
+  <home />
 </template>
 
 <script setup lang="ts">
-import TodoList from './components/TodoList/TodoList.vue';
+import Home from './components/Home/Home.vue';
 </script>
 
-<style lang="scss" scoped>
-.header {
-  font-weight: 600;
-  color: darkgray;
-}
+<style scoped lang="scss">
+@use './main.scss';
 </style>
